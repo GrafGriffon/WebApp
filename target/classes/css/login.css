@@ -1,0 +1,10 @@
+footer {
+    background-color: #F3A505;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    position: fixed; /* Фиксированное положение */
+    left: 0; bottom: 0; /* Левый нижний угол */
+    width: 100%
+}

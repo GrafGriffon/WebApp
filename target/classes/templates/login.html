@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/navbar-lite.css}" id="theme"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <title>Страница авторизации</title>
+    <style>
+        .header-info{
+            font-size: 16px;
+            color: white;
+            padding-right: 100px;
+        }
+    </style>
+    <script type="text/javascript">
+        function getCookie(name) {
+            var dc = document.cookie;
+            var prefix = name + "=";
+            var begin = dc.indexOf("; " + prefix);
+            if (begin == -1) {
+                begin = dc.indexOf(prefix);
+                if (begin != 0) return null;
+            }
+            else
+            {
+                begin += 2;
+                var end = document.cookie.indexOf(";", begin);
+                if (end == -1) {
+                    end = dc.length;
+                }
+            }
+            // because unescape has been deprecated, replaced with decodeURI
+            //return unescape(dc.substring(begin + prefix.length, end));
+            return decodeURI(dc.substring(begin + prefix.length, end));
+        }
+        function funonload() {
+            var myCookie = getCookie("username");
+
+            if (myCookie == null) {
+                alert("Куки созданы")
+                document.cookie = "username=/css/navbar-lite.css";
+            }
+            else {
+                var results = document.cookie.match ( 'username=' + '([^;]*)(;|$)' );
+                results[1]
+                let theme = document.getElementById("theme")
+                theme.href = results[1]
+            }
+        }
+        function showTheme() {
+            let theme = document.getElementById("theme")
+            if (theme.getAttribute("href") == "/css/navbar-lite.css")  {
+                theme.href = "/css/navbar-dark.css"
+                document.cookie = "username=/css/navbar-dark.css";
+            } else {
+                theme.href = "/css/navbar-lite.css"
+                document.cookie = "username=/css/navbar-lite.css";
+            }
+        }
+    </script>
+</head>
+<body onload="funonload();">
+
+
+<nav class="navbar">
+    <div class="header-top">
+        <div class="logo"><img src="https://clipart-best.com/img/letter-g/letter-g-clip-art-3.png"/>
+            <span>Graf Griffon</span></div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/blog">Статьи</a></li>
+                <li><a href="/blog/editor">Добавить свою</a></li>
+                <li class="active"><a href="/blog/login">Вход</a></li>
+                <img border="0"  class="set_theme" src="https://pngicon.ru/file/uploads/krasnyj-budilnik.png"
+                     width="30" height="40" th:onclick="'javascript:showTheme();'"/>
+            </ul>
+        </div>
+        <div class="header-info">
+            <form action="#" th:action="@{/blog/btn}" method="post">
+                <span>+375 (29) 558-51-99</span>
+                <button type="submit">Обратная связь</button>
+            </form>
+
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-4 text-left">
+
+            <form th:action="@{/blog/login}" method="post">
+                <fieldset>
+                    <h2>Введите данные</h2>
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger">
+                            Вы ввели неправильные данные
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="username" type="text" class="form-control" name="username"
+                               placeholder="логин" required="required"/>
+                    </div>
+                    <br/>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input id="email" type="email" class="form-control" name="email"
+                               placeholder="логин" required="required"/>
+                    </div>
+                    <br/>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input id="password" type="password" class="form-control" name="password"
+                               placeholder="пароль" required="required"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <button type="submit" class="btn btn-success">Войти</button>
+                    </div>
+                </fieldset>
+            </form>
+            <hr/>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<footer>
+    <p>© 2021 Minsk</p>
+</footer>
+</html>
